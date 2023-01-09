@@ -23,8 +23,8 @@ fn main() {
     //   environments where certain types of bad words are considered OK
     params.insert("catalog", "strict");
 
-    // The content to scan. This can be either a URL to load from, a file upload or an HTML content
-    // string
+    // The content to scan. This can be either a URL to load from, a file upload (multipart/form-data)
+    // or an HTML content string
     params.insert("content", "https://en.wikipedia.org/wiki/Profanity");
 
     let response = client.bad_word_filter(params);

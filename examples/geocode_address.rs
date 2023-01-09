@@ -62,7 +62,7 @@ fn main() {
         let locations = data.get("locations").unwrap().as_array().unwrap();
         for item in locations {
         println!();
-            // The fully formatted address
+            // The complete address using comma-separated values
             println!("    address: {:?}", item.get("address"));
             // The components which make up the address such as road, city, state, etc
             println!("    address-components: {:?}", item.get("address-components"));
@@ -95,8 +95,12 @@ fn main() {
             println!("    location-type: {:?}", item.get("location-type"));
             // The location longitude
             println!("    longitude: {:?}", item.get("longitude"));
+            // The formatted address using local standards suitable for printing on an envelope
+            println!("    postal-address: {:?}", item.get("postal-address"));
             // The postal code for the location
             println!("    postal-code: {:?}", item.get("postal-code"));
+            // The ISO 3166-2 region code for the location
+            println!("    region-code: {:?}", item.get("region-code"));
             // The state of the location
             println!("    state: {:?}", item.get("state"));
             // Map containing timezone details for the location

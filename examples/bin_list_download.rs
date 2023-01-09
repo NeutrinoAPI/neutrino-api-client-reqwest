@@ -20,8 +20,8 @@ fn main() {
     // added to columns 10 and 11 respectively
     params.insert("include-iso3", "false");
     
-    // Include 8-digit and higher BIN codes. Use this option if you want to download BINs with more than
-    // 6-digits
+    // Include 8-digit and higher BIN codes. This option includes all 6-digit BINs and all 8-digit and
+    // higher BINs (including some 9, 10 and 11 digit BINs where available)
     params.insert("include-8digit", "false");
 
     let response = client.bin_list_download(params, output_file_path);

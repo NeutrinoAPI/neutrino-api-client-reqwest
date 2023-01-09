@@ -7,11 +7,11 @@ The official API client and SDK built by [NeutrinoAPI](https://www.neutrinoapi.c
 | Feature          |         |
 |------------------|---------|
 | Platform Version | >= 1.41 |
-| HTTP Library     |         |
+| HTTP Library     | Reqwest |
 | JSON Library     | Serde   |
-| HTTP/2           | false   |
-| HTTP/3           | false   |
-| CodeGen Version  | 4.6.8   |
+| HTTP/2           | No      |
+| HTTP/3           | No      |
+| CodeGen Version  | 4.6.10  |
 
 ## Getting started
 
@@ -32,7 +32,7 @@ fn main() {
 ## Running Examples
 
 ```sh
-$ cargo run --example="image_watermark"
+$ cargo run --example="ip_info"
 ```
 You can find examples of all APIs in _examples/_
 
