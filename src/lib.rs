@@ -141,6 +141,20 @@ impl NeutrinoAPIClient {
         return self.exec_request("GET", "convert", params, default_path, 10);
     }
 
+    /// Retrieve domain name details and detect potentially malicious or dangerous domains
+    ///
+    /// ## The parameters this API accepts are:
+    /// * host - A domain name
+    /// * live - For domains that we have never seen before then perform various live checks and realtime reconnaissance
+    ///
+    /// ## Link
+    /// * https://www.neutrinoapi.com/api/domain-lookup
+    ///
+    pub fn domain_lookup(&self, params: HashMap<&str, &str>) -> APIResponse {
+        let default_path = PathBuf::default();
+        return self.exec_request("GET", "domain-lookup", params, default_path, 120);
+    }
+
     /// Parse, validate and clean an email address
     ///
     /// ## The parameters this API accepts are:
@@ -277,6 +291,7 @@ impl NeutrinoAPIClient {
     /// * header - The header HTML to insert into each page
     /// * margin-top - The document top margin (in mm)
     /// * margin-bottom - The document bottom margin (in mm)
+    /// * bg-color - For image rendering set the background color in hexadecimal notation (e.g. #0000ff)
     /// * landscape - Set the document to landscape orientation
     ///
     /// ## Link
@@ -475,6 +490,7 @@ impl NeutrinoAPIClient {
     /// * language-code - The language to send the verification code in
     /// * code-length - The number of digits to use in the security code (must be between 4 and 12)
     /// * limit - Limit the total number of SMS allowed to the supplied phone number
+    /// * brand-name - Set a custom brand or product name in the verification message
     /// * limit-ttl - Set the TTL in number of days that the 'limit' option will remember a phone number (the default is 1 day and the maximum is 365 days)
     ///
     /// ## Link

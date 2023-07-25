@@ -74,7 +74,7 @@ fn main() {
         // ISO 3166-2 region code (if detectable)
         println!("region-code: {:?}", data.get("region-code"));
         
-        // Map containing timezone details for the location
+        // Map containing timezone details
         println!("timezone: {:?}", data.get("timezone"));
         
         // True if this is a valid IPv4 or IPv6 address

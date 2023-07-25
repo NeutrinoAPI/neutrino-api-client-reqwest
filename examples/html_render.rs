@@ -14,7 +14,7 @@ fn main() {
         "<your-api-key>",
     );
     
-    let mut params = HashMap::with_capacity(22);
+    let mut params = HashMap::with_capacity(23);
     
     // The document margin (in mm)
     params.insert("margin", "0");
@@ -82,6 +82,10 @@ fn main() {
     
     // The document bottom margin (in mm)
     params.insert("margin-bottom", "0");
+    
+    // For image rendering set the background color in hexadecimal notation (e.g. #0000ff). For PNG
+    // output the special value of 'transparent' can be used to create a transparent PNG
+    params.insert("bg-color", "");
     
     // Set the document to landscape orientation
     params.insert("landscape", "false");

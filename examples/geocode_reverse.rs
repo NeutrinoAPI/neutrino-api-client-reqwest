@@ -96,7 +96,7 @@ fn main() {
         // The state of the location
         println!("state: {:?}", data.get("state"));
         
-        // Map containing timezone details for the location
+        // Map containing timezone details
         println!("timezone: {:?}", data.get("timezone"));
     } else {
         // API request failed, you should handle this gracefully!

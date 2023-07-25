@@ -103,7 +103,7 @@ fn main() {
             println!("    region-code: {:?}", item.get("region-code"));
             // The state of the location
             println!("    state: {:?}", item.get("state"));
-            // Map containing timezone details for the location
+            // Map containing timezone details
             println!("    timezone: {:?}", item.get("timezone"));
         }
     } else {
