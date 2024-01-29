@@ -14,7 +14,7 @@ fn main() {
         "<your-api-key>",
     );
     
-    let mut params = HashMap::with_capacity(2);
+    let mut params = HashMap::with_capacity(4);
     
     // Include ISO 3-letter country codes and ISO 3-letter currency codes in the data. These will be
     // added to columns 10 and 11 respectively
@@ -23,6 +23,13 @@ fn main() {
     // Include 8-digit and higher BIN codes. This option includes all 6-digit BINs and all 8-digit and
     // higher BINs (including some 9, 10 and 11 digit BINs where available)
     params.insert("include-8digit", "false");
+    
+    // Include all BINs and all available fields in the CSV file (overrides any values set for
+    // 'include-iso3' or 'include-8digit')
+    params.insert("include-all", "false");
+    
+    // Set this option to 'gzip' to have the output file compressed using gzip
+    params.insert("output-encoding", "");
 
     let response = client.bin_list_download(params, output_file_path);
 

@@ -25,16 +25,30 @@ fn main() {
         // API request successful, print out the response data
         println!("API Response OK: ");
         
-        // The email domain
+        // The domain name of this email address
         println!("domain: {:?}", data.get("domain"));
         
-        // True if this address has a domain error (e.g. no valid mail server records)
+        // True if this address has any domain name or DNS related errors. Check the 'domain-status' field
+        // for the detailed error reason
         println!("domain-error: {:?}", data.get("domain-error"));
         
-        // The email address. If you have used the fix-typos option then this will be the fixed address
+        // The email domain status, possible values are:
+        // • ok - the domain is in working order and can receive email
+        // • invalid - the domain is not a conformant hostname. May contain invalid syntax or characters
+        // • no-service - the domain owner has indicated there is no mail service on the domain (also
+        //   known as the 'Null MX')
+        // • no-mail - the domain has no valid MX records so cannot receive email
+        // • mx-invalid - MX records contain invalid or non-conformant hostname values
+        // • mx-bogon - MX records point to bogon IP addresses
+        // • resolv-error - MX records do not resolve to any valid IP addresses
+        println!("domain-status: {:?}", data.get("domain-status"));
+        
+        // The complete email address. If you enabled the 'fix-typos' option then this will be the corrected
+        // address
         println!("email: {:?}", data.get("email"));
         
-        // True if this email domain has a catch-all policy (it will accept mail for any username)
+        // True if this email domain has a catch-all policy. A catch-all domain will accept mail for any
+        // username so therefor the 'smtp-status' will always be 'ok'
         println!("is-catch-all: {:?}", data.get("is-catch-all"));
         
         // True if the mail server responded with a temporary failure (either a 4xx response code or
@@ -45,40 +59,44 @@ fn main() {
         // True if this address is a disposable, temporary or darknet related email address
         println!("is-disposable: {:?}", data.get("is-disposable"));
         
-        // True if this address is a free-mail address
+        // True if this address is from a free email provider
         println!("is-freemail: {:?}", data.get("is-freemail"));
         
-        // True if this address is for a person. False if this is a role based address, e.g. admin@, help@,
-        // office@, etc.
+        // True if this address likely belongs to a person. False if this is a role based address, e.g.
+        // admin@, help@, office@, etc.
         println!("is-personal: {:?}", data.get("is-personal"));
         
-        // The email service provider domain
+        // The first resolved IP address of the primary MX server, may be empty if there are domain errors
+        // present
+        println!("mx-ip: {:?}", data.get("mx-ip"));
+        
+        // The domain name of the email hosting provider
         println!("provider: {:?}", data.get("provider"));
         
         // The raw SMTP response message received during verification
         println!("smtp-response: {:?}", data.get("smtp-response"));
         
-        // The SMTP verification status for the address:
-        // • ok - SMTP verification was successful, this is a real address that can receive mail
-        // • invalid - this is not a valid email address (has either a domain or syntax error)
-        // • absent - this address is not registered with the email service provider
-        // • unresponsive - the mail server(s) for this address timed-out or refused to open an SMTP
-        //   connection
-        // • unknown - sorry, we could not reliably determine the real status of this address (this
-        //   address may or may not exist)
+        // The SMTP username verification status for this address:
+        // • ok - verification was successful, this is a real username that can receive mail
+        // • absent - this username or domain is not registered with the email service provider
+        // • invalid - not a valid email address, check the 'domain-status' field for specific details
+        // • unresponsive - the mail servers for this domain have repeatedly timed-out or refused multiple
+        //   connection attempts
+        // • unknown - sorry, we could not reliably determine the status of this username
         println!("smtp-status: {:?}", data.get("smtp-status"));
         
-        // True if this address has a syntax error
+        // True if this address has any syntax errors or is not in RFC compliant formatting
         println!("syntax-error: {:?}", data.get("syntax-error"));
         
-        // True if typos have been fixed
+        // True if any typos have been fixed. The 'fix-typos' option must be enabled for this to work
         println!("typos-fixed: {:?}", data.get("typos-fixed"));
         
-        // Is this a valid email address (syntax and domain is valid)
+        // Is this a valid email address. To be valid an email must have: correct syntax, a registered and
+        // active domain name, correct DNS records and operational MX servers
         println!("valid: {:?}", data.get("valid"));
         
-        // True if this address has passed SMTP verification. Check the smtp-status and smtp-response fields
-        // for specific verification details
+        // True if this email address has passed SMTP username verification. Check the 'smtp-status' and
+        // 'domain-status' fields for specific verification details
         println!("verified: {:?}", data.get("verified"));
     } else {
         // API request failed, you should handle this gracefully!

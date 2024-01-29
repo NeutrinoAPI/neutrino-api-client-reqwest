@@ -28,6 +28,12 @@ fn main() {
         // API request successful, print out the response data
         println!("API Response OK: ");
         
+        // The full name of the type being converted from
+        println!("from-name: {:?}", data.get("from-name"));
+        
+        // The standard UTF-8 symbol used to represent the type being converted from
+        println!("from-symbol: {:?}", data.get("from-symbol"));
+        
         // The type of the value being converted from
         println!("from-type: {:?}", data.get("from-type"));
         
@@ -39,6 +45,12 @@ fn main() {
         
         // The result of the conversion as a floating-point number
         println!("result-float: {:?}", data.get("result-float"));
+        
+        // The full name of the type being converted to
+        println!("to-name: {:?}", data.get("to-name"));
+        
+        // The standard UTF-8 symbol used to represent the type being converted to
+        println!("to-symbol: {:?}", data.get("to-symbol"));
         
         // The type being converted to
         println!("to-type: {:?}", data.get("to-type"));

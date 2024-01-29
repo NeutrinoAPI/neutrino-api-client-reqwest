@@ -25,35 +25,53 @@ fn main() {
         // API request successful, print out the response data
         println!("API Response OK: ");
         
-        // The email domain
+        // The domain name of this email address
         println!("domain: {:?}", data.get("domain"));
         
-        // True if this address has a domain error (e.g. no valid mail server records)
+        // True if this address has any domain name or DNS related errors. Check the 'domain-status' field
+        // for the detailed error reason
         println!("domain-error: {:?}", data.get("domain-error"));
         
-        // The email address. If you have used the fix-typos option then this will be the fixed address
+        // The email domain status, possible values are:
+        // • ok - the domain is in working order and can receive email
+        // • invalid - the domain is not a conformant hostname. May contain invalid syntax or characters
+        // • no-service - the domain owner has indicated there is no mail service on the domain (also
+        //   known as the 'Null MX')
+        // • no-mail - the domain has no valid MX records so cannot receive email
+        // • mx-invalid - MX records contain invalid or non-conformant hostname values
+        // • mx-bogon - MX records point to bogon IP addresses
+        // • resolv-error - MX records do not resolve to any valid IP addresses
+        println!("domain-status: {:?}", data.get("domain-status"));
+        
+        // The complete email address. If you enabled the 'fix-typos' option then this will be the corrected
+        // address
         println!("email: {:?}", data.get("email"));
         
         // True if this address is a disposable, temporary or darknet related email address
         println!("is-disposable: {:?}", data.get("is-disposable"));
         
-        // True if this address is a free-mail address
+        // True if this address is from a free email provider
         println!("is-freemail: {:?}", data.get("is-freemail"));
         
-        // True if this address belongs to a person. False if this is a role based address, e.g. admin@,
-        // help@, office@, etc.
+        // True if this address likely belongs to a person. False if this is a role based address, e.g.
+        // admin@, help@, office@, etc.
         println!("is-personal: {:?}", data.get("is-personal"));
         
-        // The email service provider domain
+        // The first resolved IP address of the primary MX server, may be empty if there are domain errors
+        // present
+        println!("mx-ip: {:?}", data.get("mx-ip"));
+        
+        // The domain name of the email hosting provider
         println!("provider: {:?}", data.get("provider"));
         
-        // True if this address has a syntax error
+        // True if this address has any syntax errors or is not in RFC compliant formatting
         println!("syntax-error: {:?}", data.get("syntax-error"));
         
-        // True if typos have been fixed
+        // True if any typos have been fixed. The 'fix-typos' option must be enabled for this to work
         println!("typos-fixed: {:?}", data.get("typos-fixed"));
         
-        // Is this a valid email
+        // Is this a valid email address. To be valid an email must have: correct syntax, a registered and
+        // active domain name, correct DNS records and operational MX servers
         println!("valid: {:?}", data.get("valid"));
     } else {
         // API request failed, you should handle this gracefully!
