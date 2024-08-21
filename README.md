@@ -1,6 +1,6 @@
 # NeutrinoAPI Rust Reqwest SDK
 
-Rust client using the Reqwest HTTP client and Serde JSON library
+Neutrino API Rust client using the Reqwest HTTP and Serde JSON libraries
 
 The official API client and SDK built by [NeutrinoAPI](https://www.neutrinoapi.com/)
 
@@ -11,7 +11,7 @@ The official API client and SDK built by [NeutrinoAPI](https://www.neutrinoapi.c
 | JSON Library     | Serde   |
 | HTTP/2           | No      |
 | HTTP/3           | No      |
-| CodeGen Version  | 4.6.13  |
+| CodeGen Version  | 4.6.15  |
 
 ## Getting started
 
@@ -35,6 +35,8 @@ fn main() {
 $ cargo run --example="ip_info"
 ```
 You can find examples of all APIs in _examples/_
+
+Set the __'your-user-id'__ and __'your-api-key'__ values in the example to retrieve real API responses
 
 ## For Support 
 [Contact us](https://www.neutrinoapi.com/contact-us/)

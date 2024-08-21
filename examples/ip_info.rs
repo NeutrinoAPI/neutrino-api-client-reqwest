@@ -11,7 +11,7 @@ fn main() {
 
     let mut params = HashMap::with_capacity(2);
 
-    // IPv4 or IPv6 address
+    // An IPv4 or IPv6 address. Accepts standard IP notation and also CIDR notation
     params.insert("ip", "1.1.1.1");
 
     // Do a reverse DNS (PTR) lookup. This option can add extra delay to the request so only use it if
@@ -50,7 +50,7 @@ fn main() {
         // The IPs full hostname (only set if reverse-lookup has been used)
         println!("hostname: {:?}", data.get("hostname"));
         
-        // An IPv4 or IPv6 address. Accepts standard IP notation and also CIDR notation.
+        // The IPv4 or IPv6 address returned
         println!("ip: {:?}", data.get("ip"));
         
         // True if this is a bogon IP address such as a private network, local network or reserved address
@@ -74,7 +74,7 @@ fn main() {
         // ISO 3166-2 region code (if detectable)
         println!("region-code: {:?}", data.get("region-code"));
         
-        // Map containing timezone details
+        // Structure of a valid ip-info -> timezone response
         println!("timezone: {:?}", data.get("timezone"));
         
         // True if this is a valid IPv4 or IPv6 address

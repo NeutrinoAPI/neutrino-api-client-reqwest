@@ -11,7 +11,7 @@ fn main() {
 
     let mut params = HashMap::with_capacity(1);
 
-    // IPv4 or IPv6 address
+    // An IPv4 or IPv6 address. Accepts standard IP notation and also CIDR notation
     params.insert("ip", "194.233.98.38");
 
     let response = client.ip_probe(params);
@@ -67,7 +67,7 @@ fn main() {
         // The IPs full hostname (PTR)
         println!("hostname: {:?}", data.get("hostname"));
         
-        // The IP address
+        // The IPv4 or IPv6 address returned
         println!("ip: {:?}", data.get("ip"));
         
         // True if this is a bogon IP address such as a private network, local network or reserved address
@@ -81,7 +81,7 @@ fn main() {
         // the provider type is VPN/proxy, this occurs in the case that the IP is detected as both types
         println!("is-isp: {:?}", data.get("is-isp"));
         
-        // True if this IP ia a proxy
+        // True if this IP is a proxy
         println!("is-proxy: {:?}", data.get("is-proxy"));
         
         // True if this is a IPv4 mapped IPv6 address

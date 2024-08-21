@@ -52,9 +52,22 @@ fn main() {
         // The complete raw, decompressed and decoded page content. Usually will be either HTML, JSON or XML
         println!("content: {:?}", data.get("content"));
         
-        // Array containing all the elements matching the supplied selector. Each element object will
-        // contain the text content, HTML content and all current element attributes
-        println!("elements: {:?}", data.get("elements"));
+        // Array containing all the elements matching the supplied selector
+        println!("elements:");
+        let elements = data.get("elements").unwrap().as_array().unwrap();
+        for item in elements {
+        println!();
+            // The 'class' attribute of the element
+            println!("    class: {:?}", item.get("class"));
+            // The 'href' attribute of the element
+            println!("    href: {:?}", item.get("href"));
+            // The raw HTML of the element
+            println!("    html: {:?}", item.get("html"));
+            // The 'id' attribute of the element
+            println!("    id: {:?}", item.get("id"));
+            // The plain-text content of the element with normalized whitespace
+            println!("    text: {:?}", item.get("text"));
+        }
         
         // Contains the error message if an error has occurred ('is-error' will be true)
         println!("error-message: {:?}", data.get("error-message"));

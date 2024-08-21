@@ -14,7 +14,10 @@ fn main() {
         "<your-api-key>",
     );
     
-    let mut params = HashMap::with_capacity(5);
+    let mut params = HashMap::with_capacity(6);
+    
+    // The barcode format to output. Accepted formats are: qr, c128
+    params.insert("code-format", "qr");
     
     // The width of the QR code (in px)
     params.insert("width", "256");
