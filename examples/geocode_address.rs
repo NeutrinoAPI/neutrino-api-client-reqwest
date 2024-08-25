@@ -103,7 +103,7 @@ fn main() {
             println!("    region-code: {:?}", item.get("region-code"));
             // The state of the location
             println!("    state: {:?}", item.get("state"));
-            // Structure of a valid ip-info -> timezone response
+            // Structure of a ip-info -> timezone response
             println!("    timezone: {:?}", item.get("timezone"));
         }
     } else {

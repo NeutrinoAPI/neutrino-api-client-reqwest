@@ -52,6 +52,9 @@ fn main() {
         // The complete raw, decompressed and decoded page content. Usually will be either HTML, JSON or XML
         println!("content: {:?}", data.get("content"));
         
+        // The size of the returned content in bytes
+        println!("content-size: {:?}", data.get("content-size"));
+        
         // Array containing all the elements matching the supplied selector
         println!("elements:");
         let elements = data.get("elements").unwrap().as_array().unwrap();
@@ -73,7 +76,15 @@ fn main() {
         println!("error-message: {:?}", data.get("error-message"));
         
         // If you executed any JavaScript this array holds the results as objects
-        println!("exec-results: {:?}", data.get("exec-results"));
+        println!("exec-results:");
+        let exec-results = data.get("exec-results").unwrap().as_array().unwrap();
+        for item in exec-results {
+        println!();
+            // The result of the executed JavaScript statement. Will be empty if the statement returned nothing
+            println!("    result: {:?}", item.get("result"));
+            // The JavaScript statement that was executed
+            println!("    statement: {:?}", item.get("statement"));
+        }
         
         // The redirected URL if the URL responded with an HTTP redirect
         println!("http-redirect-url: {:?}", data.get("http-redirect-url"));
@@ -116,14 +127,24 @@ fn main() {
         // Map containing details of the TLS/SSL setup
         println!("security-details: {:?}", data.get("security-details"));
         
+        // The HTTP servers hostname (PTR/RDNS record)
+        println!("server-hostname: {:?}", data.get("server-hostname"));
+        
         // The HTTP servers IP address
         println!("server-ip: {:?}", data.get("server-ip"));
         
         // The document title
         println!("title: {:?}", data.get("title"));
         
-        // The page URL
+        // The requested URL. This may not be the same as the final destination URL, if the URL redirects
+        // then it will be set in 'http-redirect-url' and 'is-http-redirect' will also be true
         println!("url: {:?}", data.get("url"));
+        
+        // Structure of a browser-bot -> url-components response
+        println!("url-components: {:?}", data.get("url-components"));
+        
+        // True if the URL supplied is valid
+        println!("url-valid: {:?}", data.get("url-valid"));
     } else {
         // API request failed, you should handle this gracefully!
         eprintln!(

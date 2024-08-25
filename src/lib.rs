@@ -25,16 +25,16 @@ pub struct NeutrinoAPIClient {
 impl NeutrinoAPIClient {
     /// Neutrino API endpoint
     #[allow(dead_code)]
-    pub const Multicloud: &'static str = "https://neutrinoapi.net/";
+    pub const MULTICLOUD_ENDPOINT: &'static str = "https://neutrinoapi.net/";
     /// Neutrino API endpoint
     #[allow(dead_code)]
-    pub const AWS: &'static str = "https://aws.neutrinoapi.net/";
+    pub const AWS_ENDPOINT: &'static str = "https://aws.neutrinoapi.net/";
     /// Neutrino API endpoint
     #[allow(dead_code)]
-    pub const GCP: &'static str = "https://gcp.neutrinoapi.net/";
+    pub const GCP_ENDPOINT: &'static str = "https://gcp.neutrinoapi.net/";
     /// Neutrino API endpoint
     #[allow(dead_code)]
-    pub const Backup: &'static str = "https://neutrinoapi.com/";
+    pub const BACKUP_ENDPOINT: &'static str = "https://neutrinoapi.com/";
 
     /// Constructs a new client using the default Neutrino API endpoint
     pub fn new(
@@ -44,7 +44,7 @@ impl NeutrinoAPIClient {
         NeutrinoAPIClient {
             user_id,
             api_key,
-            base_url: NeutrinoAPIClient::Multicloud
+            base_url: NeutrinoAPIClient::MULTICLOUD_ENDPOINT
         }
     }
 
