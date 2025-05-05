@@ -2,11 +2,11 @@ extern crate neutrino_api_client_reqwest;
 
 use neutrino_api_client_reqwest::NeutrinoAPIClient;
 use std::{collections::HashMap, env::temp_dir};
-use uuid::Uuid;
 
 fn main() {
     let mut output_file_path = temp_dir();
-    output_file_path.push(format!("{}-{}.png", "image-resize", Uuid::new_v4()));
+    let output_file_timestamp = std::time::UNIX_EPOCH.elapsed().unwrap().as_nanos();
+    output_file_path.push(format!("{}-{}.png", "image-resize", output_file_timestamp));
     let output_file_path = output_file_path.to_path_buf();
 
     let client = &mut NeutrinoAPIClient::new(

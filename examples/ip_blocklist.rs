@@ -100,7 +100,6 @@ fn main() {
         println!("sensors:");
         let sensors = data.get("sensors").unwrap().as_array().unwrap();
         for item in sensors {
-        println!();
             // The primary blocklist category this sensor belongs to
             println!("    blocklist: {:?}", item.get("blocklist"));
             // Contains details about the sensor source and what type of malicious activity was detected

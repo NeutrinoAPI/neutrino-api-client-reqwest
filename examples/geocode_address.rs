@@ -61,7 +61,6 @@ fn main() {
         println!("locations:");
         let locations = data.get("locations").unwrap().as_array().unwrap();
         for item in locations {
-        println!();
             // The complete address using comma-separated values
             println!("    address: {:?}", item.get("address"));
             // The components which make up the address such as road, city, state, etc
@@ -76,6 +75,8 @@ fn main() {
             println!("    country-code3: {:?}", item.get("country-code3"));
             // ISO 4217 currency code associated with the country
             println!("    currency-code: {:?}", item.get("currency-code"));
+            // The ISO 2-letter language code for the official language spoken in the country
+            println!("    language-code: {:?}", item.get("language-code"));
             // The location latitude
             println!("    latitude: {:?}", item.get("latitude"));
             // Array of strings containing any location tags associated with the address. Tags are additional
@@ -103,7 +104,7 @@ fn main() {
             println!("    region-code: {:?}", item.get("region-code"));
             // The state of the location
             println!("    state: {:?}", item.get("state"));
-            // Structure of a ip-info -> timezone response
+            // Structure of timezone
             println!("    timezone: {:?}", item.get("timezone"));
         }
     } else {

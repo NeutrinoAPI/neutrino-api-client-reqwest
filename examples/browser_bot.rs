@@ -59,7 +59,6 @@ fn main() {
         println!("elements:");
         let elements = data.get("elements").unwrap().as_array().unwrap();
         for item in elements {
-        println!();
             // The 'class' attribute of the element
             println!("    class: {:?}", item.get("class"));
             // The 'href' attribute of the element
@@ -77,9 +76,8 @@ fn main() {
         
         // If you executed any JavaScript this array holds the results as objects
         println!("exec-results:");
-        let exec-results = data.get("exec-results").unwrap().as_array().unwrap();
-        for item in exec-results {
-        println!();
+        let exec_results = data.get("exec-results").unwrap().as_array().unwrap();
+        for item in exec_results {
             // The result of the executed JavaScript statement. Will be empty if the statement returned nothing
             println!("    result: {:?}", item.get("result"));
             // The JavaScript statement that was executed
@@ -140,7 +138,7 @@ fn main() {
         // then it will be set in 'http-redirect-url' and 'is-http-redirect' will also be true
         println!("url: {:?}", data.get("url"));
         
-        // Structure of a browser-bot -> url-components response
+        // Structure of url-components
         println!("url-components: {:?}", data.get("url-components"));
         
         // True if the URL supplied is valid

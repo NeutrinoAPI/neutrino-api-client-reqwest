@@ -9,7 +9,7 @@ fn main() {
         "<your-api-key>",
     );
 
-    let mut params = HashMap::with_capacity(3);
+    let mut params = HashMap::with_capacity(4);
 
     // The value to convert from (e.g. 10.95)
     params.insert("from-value", "100");
@@ -19,6 +19,12 @@ fn main() {
 
     // The type to convert to (e.g. EUR)
     params.insert("to-type", "EUR");
+
+    // Convert using the rate on a historical date, accepted date formats are: YYYY-MM-DD, YYYY-MM,
+    // YYYY. Historical rates are stored with daily granularity so the date format YYYY-MM-DD is
+    // preferred for the highest precision. If an invalid date or a date too far into the past is
+    // supplied then the API will respond with 'valid' as false and an empty 'historical-date'
+    params.insert("historical-date", "");
 
     let response = client.convert(params);
 
@@ -39,6 +45,10 @@ fn main() {
         
         // The value being converted from
         println!("from-value: {:?}", data.get("from-value"));
+        
+        // If a historical conversion was made using the 'historical-date' request option this will contain
+        // the exact date used for the conversion in ISO format: YYYY-MM-DD
+        println!("historical-date: {:?}", data.get("historical-date"));
         
         // The result of the conversion in string format
         println!("result: {:?}", data.get("result"));

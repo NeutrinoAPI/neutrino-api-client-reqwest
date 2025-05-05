@@ -62,6 +62,9 @@ fn main() {
         // True if this is a IPv6 address. False if IPv4
         println!("is-v6: {:?}", data.get("is-v6"));
         
+        // The ISO 2-letter language code for the official language spoken in the country
+        println!("language-code: {:?}", data.get("language-code"));
+        
         // Location latitude
         println!("latitude: {:?}", data.get("latitude"));
         
@@ -74,7 +77,7 @@ fn main() {
         // ISO 3166-2 region code (if detectable)
         println!("region-code: {:?}", data.get("region-code"));
         
-        // Structure of a ip-info -> timezone response
+        // Structure of timezone
         println!("timezone: {:?}", data.get("timezone"));
         
         // True if this is a valid IPv4 or IPv6 address

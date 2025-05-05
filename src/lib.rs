@@ -35,6 +35,15 @@ impl NeutrinoAPIClient {
     /// Neutrino API endpoint
     #[allow(dead_code)]
     pub const BACKUP_ENDPOINT: &'static str = "https://neutrinoapi.com/";
+    /// Neutrino API endpoint
+    #[allow(dead_code)]
+    pub const EU_GEOFENCE_ENDPOINT: &'static str = "https://eu.neutrinoapi.net/";
+    /// Neutrino API endpoint
+    #[allow(dead_code)]
+    pub const AU_GEOFENCE_ENDPOINT: &'static str = "https://aus.neutrinoapi.net/";
+    /// Neutrino API endpoint
+    #[allow(dead_code)]
+    pub const US_GEOFENCE_ENDPOINT: &'static str = "https://usa.neutrinoapi.net/";
 
     /// Constructs a new client using the default Neutrino API endpoint
     pub fn new(
@@ -134,6 +143,7 @@ impl NeutrinoAPIClient {
     /// * from-value - The value to convert from (e.g. 10.95)
     /// * from-type - The type of the value to convert from (e.g. USD)
     /// * to-type - The type to convert to (e.g. EUR)
+    /// * historical-date - Convert using the rate on a historical date
     ///
     /// ## Link
     /// * https://www.neutrinoapi.com/api/convert
@@ -154,7 +164,7 @@ impl NeutrinoAPIClient {
     ///
     pub fn domain_lookup(&self, params: HashMap<&str, &str>) -> APIResponse {
         let default_path = PathBuf::default();
-        return self.exec_request("GET", "domain-lookup", params, default_path, 120);
+        return self.exec_request("GET", "domain-lookup", params, default_path, 300);
     }
 
     /// Parse, validate and clean an email address
@@ -182,7 +192,7 @@ impl NeutrinoAPIClient {
     ///
     pub fn email_verify(&self, params: HashMap<&str, &str>) -> APIResponse {
         let default_path = PathBuf::default();
-        return self.exec_request("GET", "email-verify", params, default_path, 120);
+        return self.exec_request("GET", "email-verify", params, default_path, 300);
     }
 
     /// Geocode an address, partial address or just the name of a place
@@ -249,7 +259,7 @@ impl NeutrinoAPIClient {
     ///
     pub fn host_reputation(&self, params: HashMap<&str, &str>) -> APIResponse {
         let default_path = PathBuf::default();
-        return self.exec_request("GET", "host-reputation", params, default_path, 120);
+        return self.exec_request("GET", "host-reputation", params, default_path, 300);
     }
 
     /// Clean and sanitize untrusted HTML
@@ -327,7 +337,7 @@ impl NeutrinoAPIClient {
         params: HashMap<&str, &str>,
         output_file_path: PathBuf,
     ) -> APIResponse {
-        return self.exec_request("POST", "image-resize", params, output_file_path, 20);
+        return self.exec_request("POST", "image-resize", params, output_file_path, 30);
     }
 
     /// Watermark one image with another image
@@ -351,7 +361,7 @@ impl NeutrinoAPIClient {
         params: HashMap<&str, &str>,
         output_file_path: PathBuf,
     ) -> APIResponse {
-        return self.exec_request("POST", "image-watermark", params, output_file_path, 20);
+        return self.exec_request("POST", "image-watermark", params, output_file_path, 30);
     }
 
     /// The IP Blocklist API will detect potentially malicious or dangerous IP addresses
@@ -413,7 +423,7 @@ impl NeutrinoAPIClient {
     ///
     pub fn ip_probe(&self, params: HashMap<&str, &str>) -> APIResponse {
         let default_path = PathBuf::default();
-        return self.exec_request("GET", "ip-probe", params, default_path, 120);
+        return self.exec_request("GET", "ip-probe", params, default_path, 300);
     }
 
     /// Make an automated call to any valid phone number and playback an audio message
@@ -485,7 +495,7 @@ impl NeutrinoAPIClient {
         params: HashMap<&str, &str>,
         output_file_path: PathBuf,
     ) -> APIResponse {
-        return self.exec_request("POST", "qr-code", params, output_file_path, 20);
+        return self.exec_request("POST", "qr-code", params, output_file_path, 30);
     }
 
     /// Send a unique security code to any mobile device via SMS
@@ -586,9 +596,10 @@ impl NeutrinoAPIClient {
         let builder = builder
             .header("API-Key", self.api_key)
             .header("User-ID", self.user_id)
+            .version(reqwest::Version::HTTP_2)
             .timeout(read_timeout);
+            
         let response = builder.send();
-
         match response {
             Ok(response) if !response.status().is_success() => {
                 let status_code = response.status().as_u16();

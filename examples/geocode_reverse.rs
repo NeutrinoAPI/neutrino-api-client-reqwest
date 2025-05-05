@@ -61,6 +61,9 @@ fn main() {
         // True if these coordinates map to a real location
         println!("found: {:?}", data.get("found"));
         
+        // The ISO 2-letter language code for the official language spoken in the country
+        println!("language-code: {:?}", data.get("language-code"));
+        
         // The location latitude
         println!("latitude: {:?}", data.get("latitude"));
         
@@ -96,7 +99,7 @@ fn main() {
         // The state of the location
         println!("state: {:?}", data.get("state"));
         
-        // Structure of a ip-info -> timezone response
+        // Structure of timezone
         println!("timezone: {:?}", data.get("timezone"));
     } else {
         // API request failed, you should handle this gracefully!

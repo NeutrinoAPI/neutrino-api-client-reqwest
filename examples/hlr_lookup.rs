@@ -93,6 +93,10 @@ fn main() {
         // The mobile MSIN number (Mobile Subscription Identification Number)
         println!("msin: {:?}", data.get("msin"));
         
+        // Contains any additional details about the current network such as former network names and mobile
+        // technology utilized
+        println!("network-tags: {:?}", data.get("network-tags"));
+        
         // The number type, possible values are:
         // • mobile
         // • fixed-line

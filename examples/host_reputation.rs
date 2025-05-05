@@ -42,7 +42,6 @@ fn main() {
         println!("lists:");
         let lists = data.get("lists").unwrap().as_array().unwrap();
         for item in lists {
-        println!();
             // True if the host is currently black-listed
             println!("    is-listed: {:?}", item.get("is-listed"));
             // The hostname of the DNSBL
