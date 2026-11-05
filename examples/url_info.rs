@@ -57,7 +57,7 @@ fn main() {
         // The HTTP status code this URL responded with. An HTTP status of 0 indicates a network level issue
         println!("http-status: {:?}", data.get("http-status"));
         
-        // The HTTP status message assoicated with the status code
+        // The HTTP status message associated with the status code
         println!("http-status-message: {:?}", data.get("http-status-message"));
         
         // True if an error occurred while loading the URL. This includes network errors, TLS errors and
@@ -75,7 +75,7 @@ fn main() {
         // The time taken to load the URL content in seconds
         println!("load-time: {:?}", data.get("load-time"));
         
-        // A key-value map of the URL query paramaters
+        // A key-value map of the URL query parameters
         println!("query: {:?}", data.get("query"));
         
         // Is this URL actually serving real content

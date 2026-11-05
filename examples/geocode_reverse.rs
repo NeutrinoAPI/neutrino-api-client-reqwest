@@ -9,7 +9,7 @@ fn main() {
         "<your-api-key>",
     );
 
-    let mut params = HashMap::with_capacity(4);
+    let mut params = HashMap::with_capacity(5);
 
     // The location latitude in decimal degrees format
     params.insert("latitude", "-41.2775847");
@@ -18,7 +18,7 @@ fn main() {
     params.insert("longitude", "174.7775229");
 
     // The language to display results in, available languages are:
-    // • de, en, es, fr, it, pt, ru
+    // • ar, de, en, es, fr, it, ja, nl, pt, ru, zh
     params.insert("language-code", "en");
 
     // The zoom level to respond with:
@@ -29,6 +29,9 @@ fn main() {
     // • country - the country level
     params.insert("zoom", "address");
 
+    // Reverse lookup by a geohash instead of using latitude and longitude
+    params.insert("geohash", "");
+
     let response = client.geocode_reverse(params);
 
     if response.data.is_some() {
@@ -37,14 +40,40 @@ fn main() {
         // API request successful, print out the response data
         println!("API Response OK: ");
         
-        // The complete address using comma-separated values
+        // The full address string using comma-separated values, use 'postal-address' for the address string
+        // formatted using country/region specific rules
         println!("address: {:?}", data.get("address"));
         
-        // The components which make up the address such as road, city, state, etc
+        // The components which make up the address such as road, city, state, etc. These are country/region
+        // specific values, use 'address-structured' for a strict address structure which is the same for
+        // all locations globally
         println!("address-components: {:?}", data.get("address-components"));
+        
+        // Structure of address-structured
+        println!("address-structured: {:?}", data.get("address-structured"));
+        
+        // The detected building type for the address, possible values are:
+        // • none - no building type was detected for this location
+        // • house - a residential house/property
+        // • apartment - a residential apartment complex
+        // • office - a commercial/business office
+        // • accommodation - a hotel/motel or other type of accommodation
+        // • education - a school or university
+        // • food - a restaurant or place where food can be purchased
+        // • shop - a shop selling any type of goods
+        // • attraction - an attraction such as theme parks or tourist activities
+        // • medical - a hospital or other medical facility
+        // • transport - a transportation building such as a bus or train depot
+        // • commercial - a commercial/industrial building
+        // • government - a government or military facility
+        // • public - a public building such as a townhall or community centre
+        println!("building-type: {:?}", data.get("building-type"));
         
         // The city of the location
         println!("city: {:?}", data.get("city"));
+        
+        // ISO 2-letter continent code
+        println!("continent-code: {:?}", data.get("continent-code"));
         
         // The country of the location
         println!("country: {:?}", data.get("country"));
@@ -61,11 +90,19 @@ fn main() {
         // True if these coordinates map to a real location
         println!("found: {:?}", data.get("found"));
         
+        // The location geohash
+        println!("geohash: {:?}", data.get("geohash"));
+        
         // The ISO 2-letter language code for the official language spoken in the country
         println!("language-code: {:?}", data.get("language-code"));
         
         // The location latitude
         println!("latitude: {:?}", data.get("latitude"));
+        
+        // Map containing any external metadata linked to the location. Currently supports the following
+        // values which are only set if known: website-url, phone-number, org-name, wikipedia-title,
+        // wikidata-entity
+        println!("location-profile: {:?}", data.get("location-profile"));
         
         // Array of strings containing any location tags associated with the address. Tags are additional
         // pieces of metadata about a specific location, there are thousands of different tags. Some

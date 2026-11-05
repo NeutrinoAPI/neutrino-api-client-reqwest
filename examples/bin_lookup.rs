@@ -82,6 +82,10 @@ fn main() {
         // Is this a prepaid or prepaid reloadable card
         println!("is-prepaid: {:?}", data.get("is-prepaid"));
         
+        // Indicates the card can be reloaded with funds. This is mostly useful to distinguish between
+        // non-reloadable and reloadable prepaid card types
+        println!("is-reloadable: {:?}", data.get("is-reloadable"));
+        
         // The card issuer
         println!("issuer: {:?}", data.get("issuer"));
         

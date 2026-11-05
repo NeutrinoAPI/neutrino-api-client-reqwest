@@ -9,42 +9,55 @@ fn main() {
         "<your-api-key>",
     );
 
-    let mut params = HashMap::with_capacity(10);
+    let mut params = HashMap::with_capacity(13);
 
     // The full address, partial address or name of a place to try and locate. Comma separated address
     // components are preferred.
     params.insert("address", "1 Molesworth Street, Thorndon, Wellington 6011");
 
-    // The house/building number to locate
+    // The house/building number to locate (for structured address searches)
     params.insert("house-number", "");
 
-    // The street/road name to locate
+    // The street/road name to locate (for structured address searches)
     params.insert("street", "");
 
-    // The city/town name to locate
+    // The city/town name to locate (for structured address searches)
     params.insert("city", "");
 
-    // The county/region name to locate
+    // The county/region name to locate (for structured address searches)
     params.insert("county", "");
 
-    // The state name to locate
+    // The state name to locate (for structured address searches)
     params.insert("state", "");
 
-    // The postal code to locate
+    // The postal code to locate (for structured address searches)
     params.insert("postal-code", "");
 
-    // Limit result to this country (the default is no country bias)
+    // Prefer results from this country code (the default is no country bias)
     params.insert("country-code", "");
 
+    // Prefer results from this list of country codes (space or comma separated values). Preference is
+    // in the order supplied, you can use the 'country-code' parameter to also set a dynamic or user
+    // supplied country code which takes precedence
+    params.insert("country-codes", "");
+
     // The language to display results in, available languages are:
-    // • de, en, es, fr, it, pt, ru, zh
+    // • ar, de, en, es, fr, it, ja, nl, pt, ru, zh
     params.insert("language-code", "en");
 
+    // Enable auto-complete for search-as-you-type and search suggestions. This option can find
+    // addresses based on partial search terms, combine with 'country-code' for country specific
+    // searches. Auto-complete works best with 'fuzzy-search' disabled for the fastest response times
+    // but can be combined if required
+    params.insert("auto-complete", "false");
+
     // If no matches are found for the given address, start performing a recursive fuzzy search until a
-    // geolocation is found. This option is recommended for processing user input or implementing
-    // auto-complete. We use a combination of approximate string matching and data cleansing to find
-    // possible location matches
+    // geolocation is found. This option is useful for processing user supplied input that may be
+    // incomplete or have typos and where you do not mind some potential loss in precision
     params.insert("fuzzy-search", "false");
+
+    // Limit search results to this many locations (between 1 and a maximum of 32)
+    params.insert("limit", "8");
 
     let response = client.geocode_address(params);
 
@@ -61,12 +74,35 @@ fn main() {
         println!("locations:");
         let locations = data.get("locations").unwrap().as_array().unwrap();
         for item in locations {
-            // The complete address using comma-separated values
+            // The full address string using comma-separated values, use 'postal-address' for the address string
+            // formatted using country/region specific rules
             println!("    address: {:?}", item.get("address"));
-            // The components which make up the address such as road, city, state, etc
+            // The components which make up the address such as road, city, state, etc. These are country/region
+            // specific values, use 'address-structured' for a strict address structure which is the same for
+            // all locations globally
             println!("    address-components: {:?}", item.get("address-components"));
+            // Structure of address-structured
+            println!("    address-structured: {:?}", item.get("address-structured"));
+            // The detected building type for the address, possible values are:
+            // • none - no building type was detected for this location
+            // • house - a residential house/property
+            // • apartment - a residential apartment complex
+            // • office - a commercial/business office
+            // • accommodation - a hotel/motel or other type of accommodation
+            // • education - a school or university
+            // • food - a restaurant or place where food can be purchased
+            // • shop - a shop selling any type of goods
+            // • attraction - an attraction such as theme parks or tourist activities
+            // • medical - a hospital or other medical facility
+            // • transport - a transportation building such as a bus or train depot
+            // • commercial - a commercial/industrial building
+            // • government - a government or military facility
+            // • public - a public building such as a townhall or community centre
+            println!("    building-type: {:?}", item.get("building-type"));
             // The city of the location
             println!("    city: {:?}", item.get("city"));
+            // ISO 2-letter continent code
+            println!("    continent-code: {:?}", item.get("continent-code"));
             // The country of the location
             println!("    country: {:?}", item.get("country"));
             // The ISO 2-letter country code of the location
@@ -75,10 +111,16 @@ fn main() {
             println!("    country-code3: {:?}", item.get("country-code3"));
             // ISO 4217 currency code associated with the country
             println!("    currency-code: {:?}", item.get("currency-code"));
+            // The location geohash
+            println!("    geohash: {:?}", item.get("geohash"));
             // The ISO 2-letter language code for the official language spoken in the country
             println!("    language-code: {:?}", item.get("language-code"));
             // The location latitude
             println!("    latitude: {:?}", item.get("latitude"));
+            // Map containing any external metadata linked to the location. Currently supports the following
+            // values which are only set if known: website-url, phone-number, org-name, wikipedia-title,
+            // wikidata-entity
+            println!("    location-profile: {:?}", item.get("location-profile"));
             // Array of strings containing any location tags associated with the address. Tags are additional
             // pieces of metadata about a specific location, there are thousands of different tags. Some
             // examples of tags: shop, office, cafe, bank, pub

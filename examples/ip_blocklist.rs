@@ -42,12 +42,19 @@ fn main() {
         //   organization
         // • malware - IP is currently involved in distributing or is running malware
         // • spyware - IP is currently involved in distributing or is running spyware
-        // • spider - IP is running a hostile web spider / web crawler
+        // • spider - IP is running a hostile web spider (deprecated but kept for backwards compatibility
+        //   instead use UA/IP lookups for spider detection)
         // • dshield - IP has been flagged as a significant attack source by DShield (dshield.org)
         println!("blocklists: {:?}", data.get("blocklists"));
         
         // The CIDR address for this listing (only set if the IP is listed)
         println!("cidr: {:?}", data.get("cidr"));
+        
+        // The unix time when this IP was first seen on any blocklist
+        println!("first-seen: {:?}", data.get("first-seen"));
+        
+        // The ISO date when this IP was first seen on any blocklist
+        println!("first-seen-date: {:?}", data.get("first-seen-date"));
         
         // The IP address
         println!("ip: {:?}", data.get("ip"));
@@ -77,7 +84,8 @@ fn main() {
         // IP address is hosting a spam bot, comment spamming or any other spamming type software
         println!("is-spam-bot: {:?}", data.get("is-spam-bot"));
         
-        // IP is running a hostile web spider / web crawler
+        // IP is running a hostile web spider (deprecated but kept for backwards compatibility instead use
+        // UA/IP lookups for spider detection)
         println!("is-spider: {:?}", data.get("is-spider"));
         
         // IP is involved in distributing or is running spyware
@@ -93,6 +101,9 @@ fn main() {
         // days therefor this value will never be older than 7 days
         println!("last-seen: {:?}", data.get("last-seen"));
         
+        // The ISO date when this IP was last seen on any blocklist
+        println!("last-seen-date: {:?}", data.get("last-seen-date"));
+        
         // The number of blocklists the IP is listed on
         println!("list-count: {:?}", data.get("list-count"));
         
@@ -107,6 +118,10 @@ fn main() {
             // The sensor ID. This is a permanent and unique ID for each sensor
             println!("    id: {:?}", item.get("id"));
         }
+        
+        // The total number of times this IP has been detected by any sensor, higher numbers indicate higher
+        // levels of malicious activity
+        println!("total-hits: {:?}", data.get("total-hits"));
     } else {
         // API request failed, you should handle this gracefully!
         eprintln!(
